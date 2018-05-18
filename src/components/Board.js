@@ -15,6 +15,17 @@ class Board extends Component {
         staticBoard
       ]
     };
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+  }
+
+  handleButtonClick(row, column) {
+    const history = this.state.history;
+    const board = history[history.length-1];
+    board[row][column]['status']='revealed';
+    history.push(board);
+    this.setState({
+      history: history
+    });
   }
 
   render() {
@@ -22,11 +33,12 @@ class Board extends Component {
     return (
       <Container textAlign='center'>
         <Segment raised padded>
-          <Columns board={history[history.length-1]}/>
+          <Columns board={history[history.length-1]} buttonClick={this.handleButtonClick}/>
         </Segment>
       </Container>
     );
   }
 }
+
 
 export default Board;

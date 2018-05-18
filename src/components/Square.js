@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 function Square(props) {
   return (
-    <Button color={props.color} icon>
+    <Button color={props.color} onClick={() => props.buttonClick(props.rowId, props.columnId)}>
       {props.value}
     </Button>
   );
@@ -15,6 +15,9 @@ function Square(props) {
 Square.propTypes = {
   value: PropTypes.number,
   color: PropTypes.string,
+  buttonClick: PropTypes.func,
+  rowId: PropTypes.number,
+  columnId: PropTypes.number,
 };
 
 
