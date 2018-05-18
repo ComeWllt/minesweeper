@@ -21,6 +21,9 @@ class Board extends Component {
   handleButtonClick(row, column) {
     const history = this.state.history;
     const board = history[history.length-1];
+    if (board[row][column]['status']=='revealed') {
+      return;
+    }
     board[row][column]['status']='revealed';
     history.push(board);
     this.setState({
