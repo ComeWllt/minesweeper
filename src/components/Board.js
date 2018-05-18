@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Container } from 'semantic-ui-react';
+import { Segment, Container, Transition, Header, Icon } from 'semantic-ui-react';
 
 import staticBoard from './staticBoard';
 
@@ -13,7 +13,10 @@ class Board extends Component {
     this.state = {
       history: [
         staticBoard
-      ]
+      ],
+      won: false,
+      lost: false,
+      revealedCount: 0,
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleButtonRightClick = this.handleButtonRightClick.bind(this);
@@ -22,7 +25,11 @@ class Board extends Component {
   handleButtonClick(row, column) {
     const history = this.state.history;
     const board = history[history.length-1];
-    if (board[row][column]['status']!=='hidden') {
+    const lost = this.state.lost;
+    const won = this.state.won;
+    const revealedCount = this.state.revealedCount;
+    const hiddenCount = history[0].length * history[0][0].length - (revealedCount+1);
+    if ((board[row][column]['status']!=='hidden') || lost || won) {
       return;
     }
     board[row][column]['status']='revealed';
@@ -30,13 +37,27 @@ class Board extends Component {
     this.setState({
       history: history
     });
+    if (board[row][column]['bomb']) {
+      this.setState({
+        lost: true
+      });
+    } else if (hiddenCount === 10) {
+      this.setState({
+        won: true
+      });
+    }
+    this.setState({
+      revealedCount: revealedCount + 1
+    });
   }
 
   handleButtonRightClick(e, row, column) {
     e.preventDefault();
     const history = this.state.history;
     const board = history[history.length-1];
-    if (board[row][column]['status']==='revealed') {
+    const lost = this.state.lost;
+    const won = this.state.won;
+    if ((board[row][column]['status']==='revealed') || lost || won) {
       return;
     }
     if (board[row][column]['status']==='hidden') {
@@ -52,14 +73,31 @@ class Board extends Component {
 
   render() {
     const history = this.state.history;
+    const lost = this.state.lost;
+    const won = this.state.won;
+    let face;
+    if (won) {
+      face = 'smile';
+    } else if (lost) {
+      face = 'frown';
+    } else {
+      face = 'meh';
+    }
     return (
       <Container textAlign='center'>
         <Segment raised padded>
-          <Columns 
-            board={history[history.length-1]} 
-            buttonClick={this.handleButtonClick}
-            buttonRightClick={this.handleButtonRightClick}
-          />
+          <Header as='h2' textAlign='center'>
+            <Icon name={face} />
+          </Header>
+          <Transition visible={lost} mountOnShow={false} animation='shake' duration={500}>
+            <div>
+              <Columns 
+                board={history[history.length-1]} 
+                buttonClick={this.handleButtonClick}
+                buttonRightClick={this.handleButtonRightClick}
+              />
+            </div>
+          </Transition>
         </Segment>
       </Container>
     );
