@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 
 
 function Row(props) {
-  const row = props.row.map((element, index) => {
+  const row = props.row.map((element) => {
     const color = element.bomb ? 'red' : null;
-    return(<Square color={color} value={element.neighbours} key={index.toString()}/>);
+    return(<Square color={color} value={element.neighbours} key={element.key}/>);
   });
   return (
     <Button.Group size='small'>
