@@ -77,19 +77,24 @@ class Board extends Component {
     const won = this.state.won;
     let face;
     if (won) {
-      face = 'smile';
+      face = (<Icon inverted color='green' name='smile' />);
     } else if (lost) {
-      face = 'frown';
+      face = (<Icon inverted color='red' name='frown' />);
     } else {
-      face = 'meh';
+      face = (<Icon inverted color='black' name='meh' />);
     }
     return (
       <Container textAlign='center'>
         <Segment raised padded>
           <Header as='h2' textAlign='center'>
-            <Icon name={face} />
+            {face}
           </Header>
-          <Transition visible={lost} mountOnShow={false} animation='shake' duration={500}>
+          <Transition 
+            visible={lost || won} 
+            mountOnShow={false} 
+            animation={won ? 'tada' : 'shake'} 
+            duration={500}
+          >
             <div>
               <Columns 
                 board={history[history.length-1]} 
