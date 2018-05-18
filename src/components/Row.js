@@ -8,18 +8,16 @@ import PropTypes from 'prop-types';
 
 function Row(props) {
   const row = props.row.map((element, index) => {
-    const color = element.bomb ? 'red' : null;
     return(
       <Square 
-        color={color} 
-        value={element.neighbours} 
+        element={element} 
         rowId={props.rowId}
         columnId={index}
         key={element.key} 
         buttonClick={props.buttonClick}/>);
   });
   return (
-    <Button.Group size='small'>
+    <Button.Group size='medium'>
       {row}
     </Button.Group>
   );
