@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Container, Transition, Header, Icon } from 'semantic-ui-react';
+import { Segment, Container, Transition, Header, Icon, Label, Button } from 'semantic-ui-react';
 
 import staticBoard from './staticBoard';
 
@@ -17,12 +17,15 @@ class Board extends Component {
       won: false,
       lost: false,
       revealedCount: 0,
+      remainingFlags: 10,
+      flagAnimation: false,
     };
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleButtonRightClick = this.handleButtonRightClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleReloadGame = this.handleReloadGame.bind(this);
   }
 
-  handleButtonClick(row, column) {
+  handleClick(row, column) {
     const history = this.state.history;
     const board = history[history.length-1];
     const lost = this.state.lost;
@@ -51,19 +54,37 @@ class Board extends Component {
     });
   }
 
-  handleButtonRightClick(e, row, column) {
+  handleRightClick(e, row, column) {
     e.preventDefault();
     const history = this.state.history;
     const board = history[history.length-1];
     const lost = this.state.lost;
     const won = this.state.won;
-    if ((board[row][column]['status']==='revealed') || lost || won) {
+    const remainingFlags = this.state.remainingFlags;
+    if (
+      (board[row][column]['status']==='revealed') 
+      || lost 
+      || won 
+    ) {
+      return;
+    }
+    if (remainingFlags===0 && board[row][column]['status']!=='marked') {
+      const flagAnimation = this.state.flagAnimation;
+      this.setState({
+        flagAnimation: !flagAnimation
+      });
       return;
     }
     if (board[row][column]['status']==='hidden') {
       board[row][column]['status']='marked';
+      this.setState({
+        remainingFlags: remainingFlags - 1
+      });
     } else if (board[row][column]['status']==='marked') {
       board[row][column]['status']='hidden';
+      this.setState({
+        remainingFlags: remainingFlags + 1
+      });
     }
     history.push(board);
     this.setState({
@@ -71,10 +92,16 @@ class Board extends Component {
     });
   }
 
+  handleReloadGame() {
+    console.log('reload button triggered');
+  }
+
   render() {
     const history = this.state.history;
     const lost = this.state.lost;
     const won = this.state.won;
+    const remainingFlags = this.state.remainingFlags;
+    const flagAnimation = this.state.flagAnimation;
     let face;
     if (won) {
       face = (<Icon inverted color='green' name='smile' />);
@@ -86,7 +113,25 @@ class Board extends Component {
     return (
       <Container textAlign='center'>
         <Segment raised padded>
-          <Header as='h2' textAlign='center'>
+          <div>
+            <Button 
+              inverted color='red' floated='left' circular icon='repeat' 
+              onClick={this.handleReloadGame}
+            />
+            <Header floated='right'>
+              <Transition 
+                visible={flagAnimation} 
+                mountOnShow={false} 
+                animation='bounce'
+                duration={500}
+              >
+                <Label floated='right' color='yellow'>
+                  <Icon name='flag' /> {(remainingFlags < 10) ? '0' + remainingFlags.toString() : remainingFlags.toString()}
+                </Label>
+              </Transition>
+            </Header>
+          </div>
+          <Header style={{marginTop: '40px'}} as='h2' textAlign='center'>
             {face}
           </Header>
           <Transition 
@@ -98,8 +143,8 @@ class Board extends Component {
             <div>
               <Columns 
                 board={history[history.length-1]} 
-                buttonClick={this.handleButtonClick}
-                buttonRightClick={this.handleButtonRightClick}
+                buttonClick={this.handleClick}
+                buttonRightClick={this.handleRightClick}
               />
             </div>
           </Transition>

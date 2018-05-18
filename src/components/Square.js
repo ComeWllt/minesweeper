@@ -22,7 +22,7 @@ function Square(props) {
     <Button 
       inverted
       active={props.element.status !== 'revealed'}
-      style={{height: '55px', width: '55px', borderRadius: '0'}} 
+      style={{height: '50px', width: '50px', borderRadius: '0'}} 
       color={color}
       onClick={() => props.buttonClick(props.rowId, props.columnId)}
       onContextMenu={(e) => props.buttonRightClick(e, props.rowId, props.columnId)}
