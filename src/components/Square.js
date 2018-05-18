@@ -10,7 +10,7 @@ function Square(props) {
   if (props.element.status === 'hidden') {
     content = (<Icon name='circle outline'/>);
   } else if (props.element.status === 'marked') {
-    content = (<Icon size='large' name='flag'/>);
+    content = (<Icon inverted color={'yellow'} size='large' name='flag'/>);
   } else if (props.element.bomb) {
     content = (<Icon color={'black'} size='large' name='bomb'/>);
   } else if (props.element.neighbours === 0) {
