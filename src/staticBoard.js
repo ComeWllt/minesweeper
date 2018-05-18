@@ -211,7 +211,7 @@ const staticBoard = ([
     {
       status: 'hidden',
       bomb: false,
-      neighbours: 2,
+      neighbours: 3,
     },
     {
       status: 'hidden',
