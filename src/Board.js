@@ -1,53 +1,55 @@
 import React, { Component } from 'react';
 import { Button, Segment, Container } from 'semantic-ui-react';
 
+import staticBoard from './staticBoard';
+
 import PropTypes from 'prop-types';
 
 
 function Square(props) {
   return (
-    <Button icon>
-      {props.name}
+    <Button color={props.color} icon>
+      {props.value}
     </Button>
   );
 }
 
 Square.propTypes = {
-  name: PropTypes.number,
+  value: PropTypes.number,
+  color: PropTypes.string,
 };
 
 function Row(props) {
-  const row = [];
-  for (let i = props.n*10; i < props.n*10+9; i++) {
-    row.push(<Square name={i} key={i}/>);
-  }
+  const row = props.row.map((element, index) => {
+    const color = element.bomb ? 'red' : null;
+    return(<Square color={color} value={element.neighbours} key={index.toString()}/>);
+  });
   return (
-    <Button.Group basic size='small'>
+    <Button.Group size='small'>
       {row}
     </Button.Group>
   );
 }
 
 Row.propTypes = {
-  n: PropTypes.number,
+  row: PropTypes.array,
 };
 
-const columns = [];
-for (let i = 1; i < 10; i++) {
-  columns.push(
-    <div key={i}>
-      <Row n={i}/>
-    </div>
-  );
-}
-
-function Squares() {
+function Columns() {
+  const columns = staticBoard.map((row, index) => {
+    return(
+      <div key={index.toString()}>
+        <Row row={row}/>
+      </div>
+    );
+  });
   return(
     <div>
       {columns}
     </div>
   );
 }
+
 
 
 class Board extends Component {
@@ -60,7 +62,7 @@ class Board extends Component {
     return (
       <Container textAlign='center'>
         <Segment raised padded>
-          <Squares/>
+          <Columns/>
         </Segment>
       </Container>
     );
