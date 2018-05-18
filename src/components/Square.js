@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 
 
 function Square(props) {
-  const color = props.element.status === 'hidden' ? 'red' : null;
+  const color = props.element.status !== 'revealed' ? 'red' : null;
   let content;
   if (props.element.status === 'hidden') {
-    content = (<Icon size='large' name='circle outline'/>);
+    content = (<Icon name='circle outline'/>);
+  } else if (props.element.status === 'marked') {
+    content = (<Icon size='large' name='flag'/>);
   } else if (props.element.bomb) {
     content = (<Icon color={'black'} size='large' name='bomb'/>);
   } else if (props.element.neighbours === 0) {
@@ -19,10 +21,11 @@ function Square(props) {
   return (
     <Button 
       inverted
-      active={props.element.status === 'hidden'}
+      active={props.element.status !== 'revealed'}
       style={{height: '55px', width: '55px', borderRadius: '0'}} 
-      color={color} 
+      color={color}
       onClick={() => props.buttonClick(props.rowId, props.columnId)}
+      onContextMenu={(e) => props.buttonRightClick(e, props.rowId, props.columnId)}
     >
       {content}
     </Button>
@@ -32,6 +35,7 @@ function Square(props) {
 Square.propTypes = {
   element: PropTypes.object,
   buttonClick: PropTypes.func,
+  buttonRightClick: PropTypes.func,
   rowId: PropTypes.number,
   columnId: PropTypes.number,
 };

@@ -14,7 +14,9 @@ function Row(props) {
         rowId={props.rowId}
         columnId={index}
         key={element.key} 
-        buttonClick={props.buttonClick}/>);
+        buttonClick={props.buttonClick}
+        buttonRightClick={props.buttonRightClick}
+      />);
   });
   return (
     <Button.Group size='medium'>
@@ -26,6 +28,7 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.array,
   buttonClick: PropTypes.func,
+  buttonRightClick: PropTypes.func,
   rowId: PropTypes.number,
 };
 

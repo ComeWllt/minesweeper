@@ -16,15 +16,34 @@ class Board extends Component {
       ]
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleButtonRightClick = this.handleButtonRightClick.bind(this);
   }
 
   handleButtonClick(row, column) {
     const history = this.state.history;
     const board = history[history.length-1];
-    if (board[row][column]['status']==='revealed') {
+    if (board[row][column]['status']!=='hidden') {
       return;
     }
     board[row][column]['status']='revealed';
+    history.push(board);
+    this.setState({
+      history: history
+    });
+  }
+
+  handleButtonRightClick(e, row, column) {
+    e.preventDefault();
+    const history = this.state.history;
+    const board = history[history.length-1];
+    if (board[row][column]['status']==='revealed') {
+      return;
+    }
+    if (board[row][column]['status']==='hidden') {
+      board[row][column]['status']='marked';
+    } else if (board[row][column]['status']==='marked') {
+      board[row][column]['status']='hidden';
+    }
     history.push(board);
     this.setState({
       history: history
@@ -36,7 +55,11 @@ class Board extends Component {
     return (
       <Container textAlign='center'>
         <Segment raised padded>
-          <Columns board={history[history.length-1]} buttonClick={this.handleButtonClick}/>
+          <Columns 
+            board={history[history.length-1]} 
+            buttonClick={this.handleButtonClick}
+            buttonRightClick={this.handleButtonRightClick}
+          />
         </Segment>
       </Container>
     );
