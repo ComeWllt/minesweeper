@@ -4,6 +4,8 @@ import { Segment, Container, Transition } from 'semantic-ui-react';
 import createBoard from './functions/createBoard';
 import expandClickedZone from './functions/expandClickedZone';
 
+import levels from './levels';
+
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
 
@@ -12,25 +14,20 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.levels = {
-      beginner: {rowNumber: 8, columnNumber: 8, bombNumber: 12},
-      intermediate: {rowNumber: 10, columnNumber: 13, bombNumber: 25},
-      expert: {rowNumber: 11, columnNumber: 20, bombNumber: 40}
-    };
     this.state = {
       board: createBoard(
-        this.levels['beginner']['rowNumber'], 
-        this.levels['beginner']['columnNumber'],
-        this.levels['beginner']['bombNumber']
+        levels['beginner']['rowNumber'], 
+        levels['beginner']['columnNumber'],
+        levels['beginner']['bombNumber']
       ),
       won: false,
       lost: false,
       revealedSquaresCount: 0,
-      remainingFlags: this.levels['beginner']['bombNumber'],
+      remainingFlags: levels['beginner']['bombNumber'],
       flagAnimation: false,
-      rowNumber: this.levels['beginner']['rowNumber'],
-      columnNumber: this.levels['beginner']['columnNumber'],
-      bombNumber: this.levels['beginner']['bombNumber'],
+      rowNumber: levels['beginner']['rowNumber'],
+      columnNumber: levels['beginner']['columnNumber'],
+      bombNumber: levels['beginner']['bombNumber'],
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
@@ -106,32 +103,32 @@ class App extends Component {
   handleChangeLevel(level) {
     const { flagAnimation } = this.state;
     const newBoard = createBoard(
-      this.levels[level]['rowNumber'], 
-      this.levels[level]['columnNumber'],
-      this.levels[level]['bombNumber']
+      levels[level]['rowNumber'], 
+      levels[level]['columnNumber'],
+      levels[level]['bombNumber']
     );
     this.setState({
       board: newBoard,
       won: false,
       lost: false,
       revealedSquaresCount: 0,
-      remainingFlags: this.levels[level]['bombNumber'],
+      remainingFlags: levels[level]['bombNumber'],
       flagAnimation: flagAnimation,
-      rowNumber: this.levels[level]['rowNumber'],
-      columnNumber: this.levels[level]['columnNumber'],
-      bombNumber: this.levels[level]['bombNumber'],
+      rowNumber: levels[level]['rowNumber'],
+      columnNumber: levels[level]['columnNumber'],
+      bombNumber: levels[level]['bombNumber'],
     });
   }
 
   render() {
     const { board, won, lost, remainingFlags, flagAnimation } = this.state;
-    let animation;
+    let boardAnimation;
     if (won) {
-      animation = 'flash';
+      boardAnimation = 'flash';
     } else if (lost) {
-      animation = 'shake';
+      boardAnimation = 'shake';
     } else {
-      animation = null;
+      boardAnimation = null;
     }
     return (
       <Container textAlign='center'>
@@ -145,7 +142,7 @@ class App extends Component {
           <Transition 
             visible={lost || won} 
             mountOnShow={false} 
-            animation={animation} 
+            animation={boardAnimation} 
             duration={500}
           >
             <div>
