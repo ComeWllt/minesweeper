@@ -8,7 +8,8 @@ function AllRows(props) {
   const columns = props.board.map((row, index) => {
     return(
       <div key={index}>
-        <Row 
+        <Row
+          lost={props.lost}
           row={row} 
           rowId={index} 
           buttonClick={props.buttonClick}
@@ -28,6 +29,7 @@ AllRows.propTypes = {
   board: PropTypes.array,
   buttonClick: PropTypes.func,
   buttonRightClick: PropTypes.func,
+  lost: PropTypes.bool,
 };
 
 

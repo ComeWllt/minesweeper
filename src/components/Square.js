@@ -6,7 +6,9 @@ import { Button, Icon } from 'semantic-ui-react';
 function Square(props) {
   const color = props.element.status !== 'revealed' ? 'red' : null;
   let content;
-  if (props.element.status === 'hidden') {
+  if (props.element.bomb && props.lost) {
+    content = (<Icon color={'black'} size='large' name='bomb'/>);
+  } else if (props.element.status === 'hidden') {
     content = (<Icon name='circle outline'/>);
   } else if (props.element.status === 'marked') {
     content = (<Icon inverted color={'yellow'} size='large' name='flag'/>);
@@ -37,6 +39,7 @@ Square.propTypes = {
   buttonRightClick: PropTypes.func,
   rowId: PropTypes.number,
   columnId: PropTypes.number,
+  lost: PropTypes.bool,
 };
 
 

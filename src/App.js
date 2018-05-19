@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Container, Transition } from 'semantic-ui-react';
 
 import createBoard from './functions/createBoard';
+import expandClickedZone from './functions/expandClickedZone';
 
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
@@ -36,8 +37,8 @@ class App extends Component {
     if ((board[row][column]['status']!=='hidden') || lost || won) {
       return;
     }
-    board[row][column]['status']='revealed';
-    history.push(board);
+    const newBoard = expandClickedZone(board, row, column);
+    history.push(newBoard['board']);
     this.setState({
       history: history
     });
@@ -51,7 +52,7 @@ class App extends Component {
       });
     }
     this.setState({
-      revealedCount: revealedCount + 1
+      revealedCount: revealedCount + newBoard['count']
     });
   }
 
@@ -129,7 +130,8 @@ class App extends Component {
             duration={500}
           >
             <div>
-              <AllRows 
+              <AllRows
+                lost={lost}
                 board={history[history.length-1]} 
                 buttonClick={this.handleClick}
                 buttonRightClick={this.handleRightClick}

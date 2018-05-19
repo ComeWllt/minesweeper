@@ -9,6 +9,7 @@ function Row(props) {
   const row = props.row.map((element, index) => {
     return(
       <Square 
+        lost={props.lost}
         element={element} 
         rowId={props.rowId}
         columnId={index}
@@ -29,6 +30,7 @@ Row.propTypes = {
   buttonClick: PropTypes.func,
   buttonRightClick: PropTypes.func,
   rowId: PropTypes.number,
+  lost: PropTypes.bool,
 };
 
 
