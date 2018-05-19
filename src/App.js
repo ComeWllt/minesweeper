@@ -16,9 +16,7 @@ class App extends Component {
     this.columnNumber = 9;
     this.bombNumber = 15;
     this.state = {
-      history: [
-        createBoard(this.rowNumber, this.columnNumber, this.bombNumber)
-      ],
+      board: createBoard(this.rowNumber, this.columnNumber, this.bombNumber),
       won: false,
       lost: false,
       revealedCount: 0,
@@ -31,16 +29,14 @@ class App extends Component {
   }
 
   handleClick(row, column) {
-    const { history, won, lost, revealedCount } = this.state;
-    const board = history[history.length-1];
+    const { board, won, lost, revealedCount } = this.state;
     const hiddenCount = this.rowNumber * this.columnNumber - (revealedCount+1);
-    if ((board[row][column]['status']!=='hidden') || lost || won) {
+    if ((board[row][column]['status'] !== 'hidden') || lost || won) {
       return;
     }
     const newBoard = expandClickedZone(board, row, column);
-    history.push(newBoard['board']);
     this.setState({
-      history: history
+      board: newBoard['board']
     });
     if (board[row][column]['bomb']) {
       this.setState({
@@ -58,35 +54,29 @@ class App extends Component {
 
   handleRightClick(e, row, column) {
     e.preventDefault();
-    const { history, won, lost, remainingFlags, flagAnimation } = this.state;    
-    const board = history[history.length-1];
-    if (
-      (board[row][column]['status']==='revealed') 
-      || lost 
-      || won 
-    ) {
+    const { board, won, lost, remainingFlags, flagAnimation } = this.state;    
+    if ((board[row][column]['status'] === 'revealed') || lost || won ) {
       return;
     }
-    if (remainingFlags===0 && board[row][column]['status']!=='marked') {
+    if (remainingFlags === 0 && board[row][column]['status'] !== 'marked') {
       this.setState({
         flagAnimation: !flagAnimation
       });
       return;
     }
-    if (board[row][column]['status']==='hidden') {
-      board[row][column]['status']='marked';
+    if (board[row][column]['status'] === 'hidden') {
+      board[row][column]['status'] = 'marked';
       this.setState({
         remainingFlags: remainingFlags - 1
       });
-    } else if (board[row][column]['status']==='marked') {
-      board[row][column]['status']='hidden';
+    } else if (board[row][column]['status'] === 'marked') {
+      board[row][column]['status'] = 'hidden';
       this.setState({
         remainingFlags: remainingFlags + 1
       });
     }
-    history.push(board);
     this.setState({
-      history: history
+      board: board
     });
   }
 
@@ -94,9 +84,7 @@ class App extends Component {
     const { flagAnimation } = this.state;
     const newBoard = createBoard(this.rowNumber, this.columnNumber, this.bombNumber);
     this.setState({
-      history: [
-        newBoard
-      ],
+      board: newBoard,
       won: false,
       lost: false,
       revealedCount: 0,
@@ -106,7 +94,7 @@ class App extends Component {
   }
 
   render() {
-    const { history, won, lost, remainingFlags, flagAnimation } = this.state;
+    const { board, won, lost, remainingFlags, flagAnimation } = this.state;
     let animation;
     if (won) {
       animation = 'flash';
@@ -132,7 +120,7 @@ class App extends Component {
             <div>
               <AllRows
                 lost={lost}
-                board={history[history.length-1]} 
+                board={board} 
                 buttonClick={this.handleClick}
                 buttonRightClick={this.handleRightClick}
               />
