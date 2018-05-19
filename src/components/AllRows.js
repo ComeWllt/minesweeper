@@ -4,7 +4,7 @@ import Row from './Row';
 
 import PropTypes from 'prop-types';
 
-function Columns(props) {
+function AllRows(props) {
   const columns = props.board.map((row, index) => {
     return(
       <div key={index.toString()}>
@@ -24,11 +24,11 @@ function Columns(props) {
   );
 }
 
-Columns.propTypes = {
+AllRows.propTypes = {
   board: PropTypes.array,
   buttonClick: PropTypes.func,
   buttonRightClick: PropTypes.func,
 };
 
 
-export default Columns;
+export default AllRows;
