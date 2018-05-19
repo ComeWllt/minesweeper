@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Container, Transition } from 'semantic-ui-react';
 
 import staticBoard from './functions/staticBoard';
+import staticBoard2 from './functions/staticBoard2';
 
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
@@ -23,15 +24,12 @@ class App extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
-    this.handleReloadGame = this.handleReloadGame.bind(this);
+    this.handleNewGame = this.handleNewGame.bind(this);
   }
 
   handleClick(row, column) {
-    const history = this.state.history;
+    const { history, won, lost, revealedCount } = this.state;
     const board = history[history.length-1];
-    const lost = this.state.lost;
-    const won = this.state.won;
-    const revealedCount = this.state.revealedCount;
     const hiddenCount = history[0].length * history[0][0].length - (revealedCount+1);
     if ((board[row][column]['status']!=='hidden') || lost || won) {
       return;
@@ -57,11 +55,8 @@ class App extends Component {
 
   handleRightClick(e, row, column) {
     e.preventDefault();
-    const history = this.state.history;
+    const { history, won, lost, remainingFlags, flagAnimation } = this.state;    
     const board = history[history.length-1];
-    const lost = this.state.lost;
-    const won = this.state.won;
-    const remainingFlags = this.state.remainingFlags;
     if (
       (board[row][column]['status']==='revealed') 
       || lost 
@@ -70,7 +65,6 @@ class App extends Component {
       return;
     }
     if (remainingFlags===0 && board[row][column]['status']!=='marked') {
-      const flagAnimation = this.state.flagAnimation;
       this.setState({
         flagAnimation: !flagAnimation
       });
@@ -93,16 +87,30 @@ class App extends Component {
     });
   }
 
-  handleReloadGame() {
-    console.log('reload button triggered');
+  handleNewGame() {
+    const { flagAnimation } = this.state;
+    this.setState({
+      history: [
+        staticBoard2
+      ],
+      won: false,
+      lost: false,
+      revealedCount: 0,
+      remainingFlags: 10,
+      flagAnimation: flagAnimation,
+    });
   }
 
   render() {
-    const history = this.state.history;
-    const lost = this.state.lost;
-    const won = this.state.won;
-    const remainingFlags = this.state.remainingFlags;
-    const flagAnimation = this.state.flagAnimation;
+    const { history, won, lost, remainingFlags, flagAnimation } = this.state;
+    let animation;
+    if (won) {
+      animation = 'flash';
+    } else if (lost) {
+      animation = 'shake';
+    } else {
+      animation = null;
+    }
     return (
       <Container textAlign='center'>
         <Segment raised padded>
@@ -110,11 +118,11 @@ class App extends Component {
             remainingFlags={remainingFlags} 
             flagAnimation={flagAnimation} 
             won={won} lost={lost}
-            reloadGame={this.handleReloadGame}/>
+            newGame={this.handleNewGame}/>
           <Transition 
             visible={lost || won} 
             mountOnShow={false} 
-            animation={won ? 'flash' : 'shake'} 
+            animation={animation} 
             duration={500}
           >
             <div>

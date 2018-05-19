@@ -16,16 +16,16 @@ function TopHeader(props) {
   return (
     <Segment size='huge'>
       <Grid verticalAlign='middle'>
-        <Grid.Column width={3} textAlign='left'>
+        <Grid.Column width={5} textAlign='left'>
           <Button 
             inverted color='red' circular icon='repeat' 
-            onClick={props.reloadGame}
+            onClick={props.newGame}
           />
         </Grid.Column>
-        <Grid.Column width={10} textAlign='center'>
+        <Grid.Column width={6} textAlign='center'>
           {face}
         </Grid.Column>
-        <Grid.Column width={3} textAlign='right'>
+        <Grid.Column width={5} textAlign='right'>
           <Transition 
             visible={props.flagAnimation} 
             mountOnShow={false} 
@@ -33,7 +33,7 @@ function TopHeader(props) {
             duration={500}
           >
             <Label color='yellow'>
-              <Icon name='flag' /> {(props.remainingFlags < 10) ? '0' + props.remainingFlags.toString() : props.remainingFlags.toString()}
+              <Icon name='flag' /> {props.remainingFlags}
             </Label>
           </Transition>
         </Grid.Column>
@@ -47,7 +47,7 @@ TopHeader.propTypes = {
   remainingFlags: PropTypes.number,
   won: PropTypes.bool,
   lost: PropTypes.bool,
-  reloadGame: PropTypes.func,
+  newGame: PropTypes.func,
 };
 
 
