@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Grid, Transition, Label, Segment } from 'semantic-ui-react';
+import { Button, Icon, Grid, Transition, Label, Segment, Form } from 'semantic-ui-react';
 
+const options = [
+  { key: 1, text: 'Beginner', value: 'beginner' },
+  { key: 2, text: 'Intermediate', value: 'intermediate' },
+  { key: 3, text: 'Expert', value: 'expert' },
+];
 
 function TopHeader(props) {
   let face;
@@ -15,11 +20,19 @@ function TopHeader(props) {
   return (
     <Segment size='huge'>
       <Grid verticalAlign='middle'>
-        <Grid.Column width={5} textAlign='left'>
+        <Grid.Column width={1} textAlign='left'>
           <Button 
             inverted color='red' circular icon='repeat' 
             onClick={props.newGame}
           />
+        </Grid.Column>
+        <Grid.Column width={4} textAlign='left'>
+          <Form>
+            <Form.Dropdown options={options} placeholder='Difficulty' 
+              defaultValue={'beginner'}
+              onChange={(e, {value}) => props.changeLevel(value)}
+            />
+          </Form>
         </Grid.Column>
         <Grid.Column width={6} textAlign='center'>
           {face}
@@ -47,6 +60,7 @@ TopHeader.propTypes = {
   won: PropTypes.bool,
   lost: PropTypes.bool,
   newGame: PropTypes.func,
+  changeLevel: PropTypes.func,
 };
 
 

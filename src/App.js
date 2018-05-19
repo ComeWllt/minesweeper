@@ -12,25 +12,35 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.rowNumber = 9;
-    this.columnNumber = 9;
-    this.bombNumber = 15;
+    this.levels = {
+      beginner: {rowNumber: 8, columnNumber: 8, bombNumber: 12},
+      intermediate: {rowNumber: 10, columnNumber: 13, bombNumber: 25},
+      expert: {rowNumber: 11, columnNumber: 20, bombNumber: 40}
+    };
     this.state = {
-      board: createBoard(this.rowNumber, this.columnNumber, this.bombNumber),
+      board: createBoard(
+        this.levels['beginner']['rowNumber'], 
+        this.levels['beginner']['columnNumber'],
+        this.levels['beginner']['bombNumber']
+      ),
       won: false,
       lost: false,
-      revealedCount: 0,
-      remainingFlags: this.bombNumber,
+      revealedSquaresCount: 0,
+      remainingFlags: this.levels['beginner']['bombNumber'],
       flagAnimation: false,
+      rowNumber: this.levels['beginner']['rowNumber'],
+      columnNumber: this.levels['beginner']['columnNumber'],
+      bombNumber: this.levels['beginner']['bombNumber'],
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleNewGame = this.handleNewGame.bind(this);
+    this.handleChangeLevel = this.handleChangeLevel.bind(this);
   }
 
   handleClick(row, column) {
-    const { board, won, lost, revealedCount } = this.state;
-    const hiddenCount = this.rowNumber * this.columnNumber - (revealedCount+1);
+    const { board, won, lost, revealedSquaresCount, rowNumber, columnNumber, bombNumber } = this.state;
+    const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount+1);
     if ((board[row][column]['status'] !== 'hidden') || lost || won) {
       return;
     }
@@ -42,13 +52,13 @@ class App extends Component {
       this.setState({
         lost: true
       });
-    } else if (hiddenCount === this.bombNumber) {
+    } else if (hiddenCount === bombNumber) {
       this.setState({
         won: true
       });
     }
     this.setState({
-      revealedCount: revealedCount + newBoard['count']
+      revealedSquaresCount: revealedSquaresCount + newBoard['count']
     });
   }
 
@@ -81,15 +91,35 @@ class App extends Component {
   }
 
   handleNewGame() {
-    const { flagAnimation } = this.state;
-    const newBoard = createBoard(this.rowNumber, this.columnNumber, this.bombNumber);
+    const { flagAnimation, rowNumber, columnNumber, bombNumber } = this.state;
+    const newBoard = createBoard(rowNumber, columnNumber, bombNumber);
     this.setState({
       board: newBoard,
       won: false,
       lost: false,
-      revealedCount: 0,
-      remainingFlags: this.bombNumber,
+      revealedSquaresCount: 0,
+      remainingFlags: bombNumber,
       flagAnimation: flagAnimation,
+    });
+  }
+
+  handleChangeLevel(level) {
+    const { flagAnimation } = this.state;
+    const newBoard = createBoard(
+      this.levels[level]['rowNumber'], 
+      this.levels[level]['columnNumber'],
+      this.levels[level]['bombNumber']
+    );
+    this.setState({
+      board: newBoard,
+      won: false,
+      lost: false,
+      revealedSquaresCount: 0,
+      remainingFlags: this.levels[level]['bombNumber'],
+      flagAnimation: flagAnimation,
+      rowNumber: this.levels[level]['rowNumber'],
+      columnNumber: this.levels[level]['columnNumber'],
+      bombNumber: this.levels[level]['bombNumber'],
     });
   }
 
@@ -110,7 +140,8 @@ class App extends Component {
             remainingFlags={remainingFlags} 
             flagAnimation={flagAnimation} 
             won={won} lost={lost}
-            newGame={this.handleNewGame}/>
+            newGame={this.handleNewGame}
+            changeLevel={this.handleChangeLevel}/>
           <Transition 
             visible={lost || won} 
             mountOnShow={false} 

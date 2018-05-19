@@ -19,7 +19,7 @@ function Row(props) {
       />);
   });
   return (
-    <Button.Group size='medium'>
+    <Button.Group size='small'>
       {row}
     </Button.Group>
   );
