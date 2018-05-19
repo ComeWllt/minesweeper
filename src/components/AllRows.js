@@ -1,13 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Row from './Row';
 
-import PropTypes from 'prop-types';
 
 function AllRows(props) {
   const columns = props.board.map((row, index) => {
     return(
-      <div key={index.toString()}>
+      <div key={index}>
         <Row 
           row={row} 
           rowId={index} 

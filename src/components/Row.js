@@ -1,9 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 
 import Square from './Square';
-
-import PropTypes from 'prop-types';
 
 
 function Row(props) {
@@ -13,7 +12,7 @@ function Row(props) {
         element={element} 
         rowId={props.rowId}
         columnId={index}
-        key={element.key} 
+        key={index} 
         buttonClick={props.buttonClick}
         buttonRightClick={props.buttonRightClick}
       />);

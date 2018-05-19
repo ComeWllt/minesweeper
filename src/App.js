@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Container, Transition } from 'semantic-ui-react';
 
-import staticBoard from './functions/staticBoard';
-import staticBoard2 from './functions/staticBoard2';
+import createBoard from './functions/createBoard';
 
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
@@ -12,14 +11,17 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.rowNumber = 9;
+    this.columnNumber = 9;
+    this.bombNumber = 15;
     this.state = {
       history: [
-        staticBoard
+        createBoard(this.rowNumber, this.columnNumber, this.bombNumber)
       ],
       won: false,
       lost: false,
       revealedCount: 0,
-      remainingFlags: 10,
+      remainingFlags: this.bombNumber,
       flagAnimation: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -30,7 +32,7 @@ class App extends Component {
   handleClick(row, column) {
     const { history, won, lost, revealedCount } = this.state;
     const board = history[history.length-1];
-    const hiddenCount = history[0].length * history[0][0].length - (revealedCount+1);
+    const hiddenCount = this.rowNumber * this.columnNumber - (revealedCount+1);
     if ((board[row][column]['status']!=='hidden') || lost || won) {
       return;
     }
@@ -43,7 +45,7 @@ class App extends Component {
       this.setState({
         lost: true
       });
-    } else if (hiddenCount === 10) {
+    } else if (hiddenCount === this.bombNumber) {
       this.setState({
         won: true
       });
@@ -89,14 +91,15 @@ class App extends Component {
 
   handleNewGame() {
     const { flagAnimation } = this.state;
+    const newBoard = createBoard(this.rowNumber, this.columnNumber, this.bombNumber);
     this.setState({
       history: [
-        staticBoard2
+        newBoard
       ],
       won: false,
       lost: false,
       revealedCount: 0,
-      remainingFlags: 10,
+      remainingFlags: this.bombNumber,
       flagAnimation: flagAnimation,
     });
   }
