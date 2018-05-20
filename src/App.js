@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Container, Transition } from 'semantic-ui-react';
+import { Segment, Container } from 'semantic-ui-react';
 
 import createBoard from './functions/createBoard';
 import expandClickedZone from './functions/expandClickedZone';
@@ -120,14 +120,6 @@ class App extends Component {
 
   render() {
     const { board, won, lost, remainingFlags, flagAnimation } = this.state;
-    let boardAnimation;
-    if (won) {
-      boardAnimation = 'flash';
-    } else if (lost) {
-      boardAnimation = 'shake';
-    } else {
-      boardAnimation = null;
-    }
     return (
       <Container textAlign='center'>
         <Segment raised padded>
@@ -137,21 +129,12 @@ class App extends Component {
             won={won} lost={lost}
             newGame={this.handleNewGame}
             changeLevel={this.handleChangeLevel}/>
-          <Transition 
-            visible={lost || won} 
-            mountOnShow={false} 
-            animation={boardAnimation} 
-            duration={500}
-          >
-            <div>
-              <AllRows
-                lost={lost}
-                board={board} 
-                buttonClick={this.handleClick}
-                buttonRightClick={this.handleRightClick}
-              />
-            </div>
-          </Transition>
+          <AllRows
+            lost={lost}
+            board={board} 
+            buttonClick={this.handleClick}
+            buttonRightClick={this.handleRightClick}
+          />
         </Segment>
       </Container>
     );

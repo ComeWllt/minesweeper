@@ -21,7 +21,7 @@ class Square extends Component {
     if (this.props.bomb && this.props.lost) {
       content = (<Icon style={{margin: '0'}} color={'black'} name='bomb'/>);
     } else if (this.props.status === 'hidden') {
-      content = (<Icon style={{margin: '0'}} name='circle outline'/>);
+      content = (<Icon style={{margin: '0'}} size='small' name='circle outline'/>);
     } else if (this.props.status === 'marked') {
       content = (<Icon style={{margin: '0'}} inverted color={'yellow'} name='flag'/>);
     } else if (this.props.bomb) {
@@ -35,7 +35,7 @@ class Square extends Component {
       <Button 
         inverted
         active={this.props.status !== 'revealed'}
-        style={{height: '40px', width: '40px', padding: '0',
+        style={{height: '30px', width: '30px', padding: '0',
           border: 'solid', borderColor: '#ff5144', borderRadius: '0', borderWidth: '1px'}} 
         color={color}
         onClick={() => this.props.buttonClick(this.props.rowId, this.props.columnId)}

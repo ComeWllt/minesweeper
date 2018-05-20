@@ -1,8 +1,8 @@
 
 const levels = {
-  beginner: {rowNumber: 8, columnNumber: 8, bombNumber: 10},
-  intermediate: {rowNumber: 10, columnNumber: 14, bombNumber: 25},
-  expert: {rowNumber: 12, columnNumber: 23, bombNumber: 60}
+  beginner: {rowNumber: 9, columnNumber: 9, bombNumber: 10},
+  intermediate: {rowNumber: 16, columnNumber: 16, bombNumber: 40},
+  expert: {rowNumber: 16, columnNumber: 30, bombNumber: 99}
 };
 
 

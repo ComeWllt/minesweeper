@@ -21,7 +21,7 @@ function Row(props) {
       />);
   });
   return (
-    <Button.Group size='tiny'>
+    <Button.Group size='mini'>
       {row}
     </Button.Group>
   );
