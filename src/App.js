@@ -37,14 +37,15 @@ class App extends Component {
 
   handleClick(row, column) {
     const { board, won, lost, revealedSquaresCount, rowNumber, columnNumber, bombNumber } = this.state;
-    const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount+1);
     if ((board[row][column]['status'] !== 'hidden') || lost || won) {
       return;
     }
-    const newBoard = expandClickedZone(board, row, column);
+    const newBoard = expandClickedZone(board.slice(), row, column);
     this.setState({
-      board: newBoard['board']
+      board: newBoard['board'],
+      revealedSquaresCount: revealedSquaresCount + newBoard['count']
     });
+    const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount + newBoard['count']);
     if (board[row][column]['bomb']) {
       this.setState({
         lost: true
@@ -54,37 +55,34 @@ class App extends Component {
         won: true
       });
     }
-    this.setState({
-      revealedSquaresCount: revealedSquaresCount + newBoard['count']
-    });
   }
 
   handleRightClick(e, row, column) {
     e.preventDefault();
-    const { board, won, lost, remainingFlags, flagAnimation } = this.state;    
-    if ((board[row][column]['status'] === 'revealed') || lost || won ) {
+    const { board, won, lost, remainingFlags, flagAnimation } = this.state; 
+    const newBoard = board.slice();
+    if ((newBoard[row][column]['status'] === 'revealed') || lost || won ) {
       return;
     }
-    if (remainingFlags === 0 && board[row][column]['status'] !== 'marked') {
+    if (remainingFlags === 0 && newBoard[row][column]['status'] !== 'marked') {
       this.setState({
         flagAnimation: !flagAnimation
       });
       return;
     }
-    if (board[row][column]['status'] === 'hidden') {
-      board[row][column]['status'] = 'marked';
+    if (newBoard[row][column]['status'] === 'hidden') {
+      newBoard[row][column]['status'] = 'marked';
       this.setState({
+        board: newBoard,
         remainingFlags: remainingFlags - 1
       });
-    } else if (board[row][column]['status'] === 'marked') {
-      board[row][column]['status'] = 'hidden';
+    } else if (newBoard[row][column]['status'] === 'marked') {
+      newBoard[row][column]['status'] = 'hidden';
       this.setState({
+        board: newBoard,
         remainingFlags: remainingFlags + 1
       });
     }
-    this.setState({
-      board: board
-    });
   }
 
   handleNewGame() {
