@@ -10,7 +10,9 @@ function Row(props) {
     return(
       <Square 
         lost={props.lost}
-        element={element} 
+        status={element.status}
+        neighbours={element.neighbours}
+        bomb={element.bomb}
         rowId={props.rowId}
         columnId={index}
         key={index} 
