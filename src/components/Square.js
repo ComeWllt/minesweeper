@@ -7,13 +7,13 @@ function Square(props) {
   const color = props.element.status !== 'revealed' ? 'red' : null;
   let content;
   if (props.element.bomb && props.lost) {
-    content = (<Icon color={'black'} name='bomb'/>);
+    content = (<Icon style={{margin: '0'}} color={'black'} name='bomb'/>);
   } else if (props.element.status === 'hidden') {
-    content = (<Icon size='small' name='circle outline'/>);
+    content = (<Icon style={{margin: '0'}} name='circle outline'/>);
   } else if (props.element.status === 'marked') {
-    content = (<Icon inverted color={'yellow'} name='flag'/>);
+    content = (<Icon style={{margin: '0'}} inverted color={'yellow'} name='flag'/>);
   } else if (props.element.bomb) {
-    content = (<Icon color={'black'} name='bomb'/>);
+    content = (<Icon style={{margin: '0'}} color={'black'} name='bomb'/>);
   } else if (props.element.neighbours === 0) {
     content = (<div style={{color:'black'}}></div>);
   } else {
@@ -23,7 +23,7 @@ function Square(props) {
     <Button 
       inverted
       active={props.element.status !== 'revealed'}
-      style={{height: '45px', width: '45px', borderRadius: '0'}} 
+      style={{height: '40px', width: '40px', borderRadius: '0', padding: '0'}} 
       color={color}
       onClick={() => props.buttonClick(props.rowId, props.columnId)}
       onContextMenu={(e) => props.buttonRightClick(e, props.rowId, props.columnId)}
