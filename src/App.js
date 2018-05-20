@@ -4,7 +4,7 @@ import { Segment, Container, Transition } from 'semantic-ui-react';
 import createBoard from './functions/createBoard';
 import expandClickedZone from './functions/expandClickedZone';
 
-import levels from './levels';
+import levels from './config/levels';
 
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
