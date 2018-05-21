@@ -1,6 +1,6 @@
 # Minesweeper
 
-This is a minesweeper game, generated with [React](https://reactjs.org).
+This is a minesweeper game, generated with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Demo
 
