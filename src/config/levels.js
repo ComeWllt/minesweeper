@@ -1,4 +1,6 @@
 
+// These are the levels settings.
+
 const levels = {
   beginner: {rowNumber: 9, columnNumber: 9, bombNumber: 10},
   intermediate: {rowNumber: 16, columnNumber: 16, bombNumber: 40},

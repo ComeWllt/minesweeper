@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import Row from './Row';
 
 
+// The AllRows function returns all the rows of the board.
+
 function AllRows(props) {
   const columns = props.board.map((row, index) => {
-    return(
+    return (
       <div key={index}>
         <Row
           lost={props.lost}
-          row={row} 
+          row={row}
           rowId={index} 
           buttonClick={props.buttonClick}
           buttonRightClick={props.buttonRightClick}
@@ -18,7 +20,7 @@ function AllRows(props) {
       </div>
     );
   });
-  return(
+  return (
     <div>
       {columns}
     </div>

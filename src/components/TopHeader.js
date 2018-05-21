@@ -8,6 +8,8 @@ import Flags from './TopHeaderComponents/Flags';
 import LevelChoice from './TopHeaderComponents/LevelChoice';
 
 
+// The TopHeader Component renders the four Components above.
+
 class TopHeader extends PureComponent {
 
   render() {

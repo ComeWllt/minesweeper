@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 
 
+// The Square Component renders a square according to its attributes values.
+// It is updated only when necessary thanks to 'shouldComponentUpdate'.
+
 class Square extends Component {
 
   shouldComponentUpdate(nextProps) {

@@ -1,5 +1,7 @@
 
-function expandClickedZone(board, row, column) {
+// Return a new board with the new revealed squares, and a count of the revealed squares.
+
+function expandClickedArea(board, row, column) {
 
   const rowNumber = board.length;
   const columnNumber = board[0].length;
@@ -9,6 +11,8 @@ function expandClickedZone(board, row, column) {
   return({board: board, count: count});
 }
 
+// Recursively expand the area if the player clicked on a 'blank' square (next to 0 bomb).
+// Checking (board[i][j]['status']==='revealed') prevents from treating the same square several times.
 
 function recursiveExpansion(board, i, j, columnNumber, rowNumber) {
 
@@ -76,4 +80,4 @@ function recursiveExpansion(board, i, j, columnNumber, rowNumber) {
 }
 
 
-export default expandClickedZone;
+export default expandClickedArea;

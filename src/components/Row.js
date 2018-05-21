@@ -5,6 +5,8 @@ import { Button } from 'semantic-ui-react';
 import Square from './Square';
 
 
+// The Row function returns a row of squares.
+
 function Row(props) {
   const row = props.row.map((element, index) => {
     return(

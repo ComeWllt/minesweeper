@@ -22,10 +22,10 @@ class Smiley extends PureComponent {
       face = (<Icon size='big' inverted color='black' name='meh' />);
     }
     return (
-      <Transition 
-        mountOnShow={false} 
+      <Transition
+        mountOnShow={false}
         visible={visible}
-        animation={animation} 
+        animation={animation}
         duration={500}
       >
         {face}

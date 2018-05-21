@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Segment, Container } from 'semantic-ui-react';
 
 import createBoard from './functions/createBoard';
-import expandClickedZone from './functions/expandClickedZone';
+import expandClickedArea from './functions/expandClickedArea';
 
 import levels from './config/levels';
 
 import AllRows from './components/AllRows';
 import TopHeader from './components/TopHeader';
 
+
+// This is the main component handling the board state.
 
 class App extends Component {
 
@@ -35,12 +37,14 @@ class App extends Component {
     this.handleChangeLevel = this.handleChangeLevel.bind(this);
   }
 
+  // Handle a left click on a square according to its status.
+
   handleClick(row, column) {
     const { board, won, lost, revealedSquaresCount, rowNumber, columnNumber, bombNumber } = this.state;
     if ((board[row][column]['status'] !== 'hidden') || lost || won) {
       return;
     }
-    const newBoard = expandClickedZone(board.slice(), row, column);
+    const newBoard = expandClickedArea(board.slice(), row, column);
     this.setState({
       board: newBoard['board'],
       revealedSquaresCount: revealedSquaresCount + newBoard['count']
@@ -50,7 +54,7 @@ class App extends Component {
         lost: true
       });
       return;
-    } 
+    }
     const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount + newBoard['count']);
     if (hiddenCount === bombNumber) {
       this.setState({
@@ -58,6 +62,8 @@ class App extends Component {
       });
     }
   }
+
+  // Handle a right click on a square according to its status.
 
   handleRightClick(e, row, column) {
     e.preventDefault();
@@ -87,6 +93,8 @@ class App extends Component {
     }
   }
 
+  // Launch a new game.
+
   handleNewGame() {
     const { flagAnimation, rowNumber, columnNumber, bombNumber } = this.state;
     const newBoard = createBoard(rowNumber, columnNumber, bombNumber);
@@ -99,6 +107,8 @@ class App extends Component {
       flagAnimation: flagAnimation,
     });
   }
+
+  // Change difficulty and lauch a new game.
 
   handleChangeLevel(level) {
     const { flagAnimation } = this.state;
@@ -121,14 +131,14 @@ class App extends Component {
   }
 
   render() {
-    const { board, won, lost, remainingFlags, flagAnimation } = this.state;
+    const { board, won, lost, started, remainingFlags, flagAnimation } = this.state;
     return (
       <Container textAlign='center'>
         <Segment raised padded>
           <TopHeader 
             remainingFlags={remainingFlags} 
             flagAnimation={flagAnimation} 
-            won={won} lost={lost}
+            won={won} lost={lost} started={started}
             newGame={this.handleNewGame}
             changeLevel={this.handleChangeLevel}/>
           <AllRows

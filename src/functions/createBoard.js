@@ -1,4 +1,6 @@
 
+// Create a board of dimensions (rowNumber*columnNumber) filled with (bombNumber) bombs.
+
 function createBoard(rowNumber, columnNumber, bombNumber) {
 
   let board = Array(rowNumber)
@@ -13,6 +15,7 @@ function createBoard(rowNumber, columnNumber, bombNumber) {
 
 }
 
+// Create a row of the board filled with default values.
 
 function createRow(columnNumber) {
 
@@ -29,6 +32,7 @@ function createRow(columnNumber) {
   return(row);
 }
 
+// Add the bombs to the board
 
 function addBomb(board, rowNumber, columnNumber) {
 
@@ -43,6 +47,7 @@ function addBomb(board, rowNumber, columnNumber) {
   }
 }
 
+// Update the value 'neighbours' of squares which are next to a bomb.
 
 function increaseNeighboursValues(board, rowNumber, columnNumber, i, j) {
   if (i === 0 && j === 0) {
