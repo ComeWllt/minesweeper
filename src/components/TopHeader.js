@@ -1,69 +1,30 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Grid, Transition, Label, Segment, Form } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 
-const options = [
-  { key: 1, text: 'Beginner', value: 'beginner' },
-  { key: 2, text: 'Intermediate', value: 'intermediate' },
-  { key: 3, text: 'Expert', value: 'expert' },
-];
+import NewGameButton from './TopHeaderComponents/NewGameButton';
+import Smiley from './TopHeaderComponents/Smiley';
+import Flags from './TopHeaderComponents/Flags';
+import LevelChoice from './TopHeaderComponents/LevelChoice';
+
 
 class TopHeader extends PureComponent {
 
   render() {
-    let face;
-    let animation;
-    let visible=false;
-    if (this.props.won) {
-      face = (<Icon size='big' inverted color='green' name='smile' />);
-      animation='jiggle';
-      visible=true;
-    } else if (this.props.lost) {
-      face = (<Icon size='big' inverted color='red' name='frown' />);
-      animation='shake';
-      visible=true;
-    } else {
-      animation=null;
-      face = (<Icon size='big' inverted color='black' name='meh' />);
-    }
     return (
       <Segment size='huge'>
         <Grid verticalAlign='middle'>
           <Grid.Column width={1} textAlign='left'>
-            <Button 
-              inverted color='red' circular icon='repeat' 
-              onClick={this.props.newGame}
-            />
+            <NewGameButton newGame={this.props.newGame}/>
           </Grid.Column>
           <Grid.Column width={4} textAlign='left'>
-            <Form>
-              <Form.Dropdown options={options} placeholder='Difficulty' 
-                defaultValue={'beginner'}
-                onChange={(e, {value}) => this.props.changeLevel(value)}
-              />
-            </Form>
+            <LevelChoice changeLevel={this.props.changeLevel}/>
           </Grid.Column>
           <Grid.Column width={6} textAlign='center'>
-            <Transition 
-              mountOnShow={false} 
-              visible={visible}
-              animation={animation} 
-              duration={500}
-            >
-              {face}
-            </Transition>
+            <Smiley lost={this.props.lost} won={this.props.won}/>
           </Grid.Column>
           <Grid.Column width={5} textAlign='right'>
-            <Transition 
-              visible={this.props.flagAnimation} 
-              mountOnShow={false} 
-              animation='bounce'
-              duration={500}
-            >
-              <Label color='yellow'>
-                <Icon name='flag' /> {this.props.remainingFlags}
-              </Label>
-            </Transition>
+            <Flags flagAnimation={this.props.flagAnimation} remainingFlags={this.props.remainingFlags}/>
           </Grid.Column>
         </Grid>
       </Segment>

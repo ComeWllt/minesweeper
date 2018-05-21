@@ -45,12 +45,14 @@ class App extends Component {
       board: newBoard['board'],
       revealedSquaresCount: revealedSquaresCount + newBoard['count']
     });
-    const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount + newBoard['count']);
     if (board[row][column]['bomb']) {
       this.setState({
         lost: true
       });
-    } else if (hiddenCount === bombNumber) {
+      return;
+    } 
+    const hiddenCount = rowNumber * columnNumber - (revealedSquaresCount + newBoard['count']);
+    if (hiddenCount === bombNumber) {
       this.setState({
         won: true
       });
