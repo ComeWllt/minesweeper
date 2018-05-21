@@ -1,6 +1,6 @@
 # Minesweeper
 
-This is a minesweeper game, generated with [Create React App](https://github.com/facebook/create-react-app).
+This is a minesweeper game coded in React.js, generated with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Demo
 
@@ -26,8 +26,8 @@ Everything happens in the folder `src`.
 
 ## Performance
 
-I used **PureComponents** and **shouldComponentUpdate** in order to optimize performance, in particular by preventing unnecessary updates of every square
+I used **PureComponents** and **shouldComponentUpdate** in order to optimize performance, in particular by preventing unnecessary updates of every square.
 
 ## UI
 
-The app uses [Semantic UI React](https://react.semantic-ui.com)
+The app uses [Semantic UI React](https://react.semantic-ui.com).
