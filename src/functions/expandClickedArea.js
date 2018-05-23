@@ -26,56 +26,55 @@ function recursiveExpansion(board, i, j, columnNumber, rowNumber) {
   board[i][j]['status']='revealed';
   count += 1;
 
-  if (i===0 && j===0) {
+  try{
     if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
+    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
+    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     if (board[i+1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j+1, columnNumber, rowNumber); }
-  } else if (i===0 && j===columnNumber-1) {
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
-    if (board[i+1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j-1, columnNumber, rowNumber); }
-  } else if (i===rowNumber-1 && j===0) {
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
-    if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
-    if (board[i-1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j+1, columnNumber, rowNumber); }
-  } else if (i===rowNumber-1 && j===columnNumber-1) {
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     if (board[i-1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j-1, columnNumber, rowNumber); }
-  } else if (i===0) {
-    if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
-    if (board[i+1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j+1, columnNumber, rowNumber); }
-    if (board[i+1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j-1, columnNumber, rowNumber); }
-  } else if (j===0) {
-    if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
-    if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
-    if (board[i+1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j+1, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     if (board[i-1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j+1, columnNumber, rowNumber); }
-  } else if (i===rowNumber-1) {
-    if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
-    if (board[i-1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j-1, columnNumber, rowNumber); }
-    if (board[i-1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j+1, columnNumber, rowNumber); }
-  } else if (j===columnNumber-1) {
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
-    if (board[i-1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j-1, columnNumber, rowNumber); }
-    if (board[i+1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j-1, columnNumber, rowNumber); }
-  } else {
-    if (board[i][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j+1, columnNumber, rowNumber); }
-    if (board[i][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i, j-1, columnNumber, rowNumber); }
-    if (board[i+1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j, columnNumber, rowNumber); }
-    if (board[i-1][j]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j, columnNumber, rowNumber); }
-    if (board[i+1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j+1, columnNumber, rowNumber); }
-    if (board[i-1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j-1, columnNumber, rowNumber); }
-    if (board[i-1][j+1]['status'] === 'hidden') { count += recursiveExpansion(board, i-1, j+1, columnNumber, rowNumber); }
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     if (board[i+1][j-1]['status'] === 'hidden') { count += recursiveExpansion(board, i+1, j-1, columnNumber, rowNumber); }
   }
+  catch(e) {
+    //pass
+  }
+  
   return(count);
 }
 

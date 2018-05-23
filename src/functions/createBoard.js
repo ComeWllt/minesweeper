@@ -50,55 +50,53 @@ function addBomb(board, rowNumber, columnNumber) {
 // Update the value 'neighbours' of squares which are next to a bomb.
 
 function increaseNeighboursValues(board, rowNumber, columnNumber, i, j) {
-  if (i === 0 && j === 0) {
+  try{
     board[i][j+1]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
+    board[i][j-1]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     board[i+1][j]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
+    board[i-1][j]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     board[i+1][j+1]['neighbours'] += 1;
-  } else if (i === 0 && j === columnNumber-1) {
-    board[i][j-1]['neighbours'] += 1;
-    board[i+1][j]['neighbours'] += 1;
-    board[i+1][j-1]['neighbours'] += 1;
-  } else if (i === rowNumber-1 && j === 0) {
-    board[i-1][j]['neighbours'] += 1;
-    board[i][j+1]['neighbours'] += 1;
-    board[i-1][j+1]['neighbours'] += 1;
-  } else if (i === rowNumber-1 && j === columnNumber-1) {
-    board[i][j-1]['neighbours'] += 1;
-    board[i-1][j]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     board[i-1][j-1]['neighbours'] += 1;
-  } else if (i === 0) {
-    board[i][j+1]['neighbours'] += 1;
-    board[i][j-1]['neighbours'] += 1;
-    board[i+1][j]['neighbours'] += 1;
-    board[i+1][j+1]['neighbours'] += 1;
-    board[i+1][j-1]['neighbours'] += 1;
-  } else if (j === 0) {
-    board[i][j+1]['neighbours'] += 1;
-    board[i+1][j]['neighbours'] += 1;
-    board[i-1][j]['neighbours'] += 1;
-    board[i+1][j+1]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
     board[i-1][j+1]['neighbours'] += 1;
-  } else if (i === rowNumber-1) {
-    board[i][j+1]['neighbours'] += 1;
-    board[i][j-1]['neighbours'] += 1;
-    board[i-1][j]['neighbours'] += 1;
-    board[i-1][j-1]['neighbours'] += 1;
-    board[i-1][j+1]['neighbours'] += 1;
-  } else if (j === columnNumber-1) {
-    board[i][j-1]['neighbours'] += 1;
-    board[i+1][j]['neighbours'] += 1;
-    board[i-1][j]['neighbours'] += 1;
-    board[i-1][j-1]['neighbours'] += 1;
-    board[i+1][j-1]['neighbours'] += 1;
-  } else {
-    board[i][j+1]['neighbours'] += 1;
-    board[i][j-1]['neighbours'] += 1;
-    board[i+1][j]['neighbours'] += 1;
-    board[i-1][j]['neighbours'] += 1;
-    board[i+1][j+1]['neighbours'] += 1;
-    board[i-1][j-1]['neighbours'] += 1;
-    board[i-1][j+1]['neighbours'] += 1;
-    board[i+1][j-1]['neighbours'] += 1;
+  }
+  catch(e) {
+    //pass
+  }
+  try{
+    board[i+1][j-1]['neighbours'] + 1;
+  }
+  catch(e) {
+    //pass
   }
 }
 
