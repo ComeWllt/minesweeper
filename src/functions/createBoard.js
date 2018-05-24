@@ -93,7 +93,7 @@ function increaseNeighboursValues(board, rowNumber, columnNumber, i, j) {
     //pass
   }
   try{
-    board[i+1][j-1]['neighbours'] + 1;
+    board[i+1][j-1]['neighbours'] += 1;
   }
   catch(e) {
     //pass
